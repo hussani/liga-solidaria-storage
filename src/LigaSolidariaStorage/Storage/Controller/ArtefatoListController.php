@@ -12,8 +12,13 @@ class ArtefatoListController implements Routable
 {
     public function get($path = null)
     {
-        $pathWithExtension = "{$path}." .
-            pathinfo($_SERVER['REQUEST_URI'], PATHINFO_EXTENSION);
+        $extension = pathinfo($_SERVER['REQUEST_URI'], PATHINFO_EXTENSION);
+
+        if (!empty($extension)) {
+            $extension = '.' . $extension;
+        }
+        $pathWithExtension = "{$path}" . $extension;
+
         $fullPath = UPLOAD_DIR . '/' . $pathWithExtension;
 
         if (is_file($fullPath)) {
